@@ -1,6 +1,15 @@
 # NYC Aging Python Project
 ## Analyzing NYC OpenData from the Department for the Aging
 
+### About the NYC Department for the Aging
+From [NYC.gov](https://www.nyc.gov/site/dfta/about/commissioners-message.page):
+> ...the NYC Department for the Aging is deeply committed to helping older adults age in their homes and creating a community-care approach that reflects a model age-inclusive city.
+> 
+> We accomplish these goals by **partnering with hundreds of community-based organizations to provide services** through older adult centers, naturally occurring retirement communities, case-management and home-care agencies, home-delivered meal programs, mental health and friendly visiting programs, and much more in each borough.
+
+From the data dictionary for `reported_expenditures.csv`:
+> The NYC Department for the Aging (NYC Aging) provides a wide array of services to assist older adults in New York City.  To accomplish this, the department **contracts out to organizations (mainly non-profit) to provide services** throughout the five boroughs.
+
 ### About the .csv files
 * *all_contracted_providers.csv*
   * 379 rows, 8 columns
