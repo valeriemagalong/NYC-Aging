@@ -105,6 +105,7 @@ for col in ['Total FTEs', 'Months in HHS']:
     
 # Add five derived columns to scpd dataframe
 scpd['Total Employees'] = scpd['Total FTEs'] + scpd['Total PTEs']
+scpd['Client to Staff Ratio'] = scpd['Average Daily Clients'] / scpd['Total Employees']
 scpd['PTE Status'] = scpd['Total PTEs'].apply(lambda num: 'Has No PTEs' if num == 0 else 'Has PTEs')
 scpd['% Budget Allocated for Personnel'] = scpd['Total Personnel Budget'] / scpd['Total Budget']
 scpd['% Budget Allocated for Meals'] = scpd['Total Meal Budget'] / scpd['Total Budget']
