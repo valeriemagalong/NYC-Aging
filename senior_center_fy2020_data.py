@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 
-/*
-Clean Senior Center Provider Data
-*/
+
+## Clean Senior Center Provider Data
+
 
 scpd_raw = pd.read_csv('raw_csv/senior_center_provider_data_fy2020.csv')
 
@@ -116,9 +116,9 @@ scpd['% Budget Allocated for Meals'] = scpd['Total Meal Budget'] / scpd['Total B
 scpd['% Budget Used for AIB, SCE, & HPP Services'] = scpd['Total AIB-SCE-HPP Expenditures'] / scpd['Total Budget']
 
 
-/*
-Clean Senior Center Client Data
-*/
+
+## Clean Senior Center Client Data
+
 
 sccd_raw = pd.read_csv('raw_csv/senior_center_client_data_fy2020.csv')
 
