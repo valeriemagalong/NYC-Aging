@@ -77,3 +77,23 @@ From the data dictionary for `reported_expenditures.csv`:
        'SatHourOpen', 'SatHourClose', 'SunHourOpen', 'SunHourClose',
        'Latitude', 'Longitude', 'Community Board', 'Council District',
        'Census Tract', 'BIN', 'BBL', 'NTA', 'Location 1']`
+
+### What observations have come out of exploratory data analysis?
+1. Brooklyn has the most senior centers (97) partnered with NYC Aging, followed by Manhattan (73).
+2. Staten Island and Manhattan have the highest median number of employees (12 and 10 respectively) per senior center.  Brooklyn & Bronx have the lowest (8 respectively).
+3. 83% of Staten Island's senior centers & 64% of Manhattan's have both PTEs and FTEs.  Brooklyn & Bronx have the lowest percentage of their senior centers with both employee types (44% and 41% respectively).
+4. Staten Island and Queens have the highest median number of FTEs (8 respectively) per senior center.  Manhattan has the lowest (6).
+5. Staten Island and Manhattan have the highest median number of PTEs (5 and 2 respectively).  The median number of PTEs in the other boroughs is 0.
+6. Staten Island and Manhattan have the highest median number of daily clients per senior center (85 respectively).  Brooklyn & Bronx have the lowest (72 and 62 respectively).
+7. There is a positive correlation between Total Employees and Average Daily Clients for Manhattan (r = 0.58) and Bronx (r = 0.56). Brooklyn has the weakest correlation (r = 0.20).
+8. Staten Island & Brooklyn have the lowest median Client to Staff Ratio (5:1 and 7:1 respectively).  The other boroughs have a 8:1 client to staff ratio.
+9. There is a positive correlation between client to staff ratio and average daily clients for all boroughs except the Bronx (r = 0.27).
+10. Queens and Staten Island have the highest median annual expenses per senior center (510k and 490k respectively).  Brooklyn and Bronx have the lowest (446k and 384k).
+11. Staten Island and Brooklyn have the highest median percent budget allocated for meals (48% and 46% respectively).  Bronx has the lowest (38%).
+12. Staten Island and Queens have the highest median meal expenditure per client ($9.82 and $9.65 respectively.)  Bronx has the lowest ($8.27).
+
+**Take-Homes**
+* Manhattan has the most employees, most daily clients, highest % of senior centers with both FTEs & PTEs 
+* Brooklyn has the most senior centers, lowest client-to-staff ratio, second lowest daily clients, weakest correlation between employees and daily clients, second lowest annual expenses, highest % budget allocated for meals
+* Bronx has the lowest daily clients, weakest correlation between client-to-staff ratio and daily clients, lowest annual expenses, lowest % budget allocated for meals, lowest meal expenditure per client
+* Queens has the highest annual expenses, highest meal expenditure per client
