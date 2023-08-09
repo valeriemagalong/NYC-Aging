@@ -169,11 +169,16 @@ sccd.drop(index = sccd[sccd['Senior Center Name'].isna()].index, inplace = True)
 # Cast the values in 'Service Date' to datetimes
 sccd['Service Date'] = pd.to_datetime(sccd['Service Date'], format = '%m/%d/%Y')
 
-# Derive a column called 'Service Month' from the 'Service Date' column
+# Derive a columns called 'Service Month' and 'Service Month as Num' from the 'Service Date' column
 sccd['Service Month'] = sccd['Service Date'].dt.strftime('%B %Y')
-
-# Derive a column called 'Service Month as Num' from the 'Service Date' column
 sccd['Service Month as Num'] = sccd['Service Date'].dt.month
+
+# Derive a column called 'Service Day of Week' from the 'Service Date' column
+# Assuming 'date_column' is your datetime column
+sccd['Service Day of Week'] = sccd['Service Date'].dt.dayofweek
+
+day_names = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+sccd['Service Day of Week'] = sccd['Service Day of Week'].map(lambda day: day_names[day])
 
 # Derive a column called 'Fiscal Quarter' from the 'Service Month' column
 def get_fiscal_quarter(month):
