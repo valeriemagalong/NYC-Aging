@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
 
+/*
+Clean Senior Center Provider Data
+*/
+
 scpd_raw = pd.read_csv('raw_csv/senior_center_provider_data_fy2020.csv')
 
 # Make a copy of the raw dataframe
@@ -110,3 +114,77 @@ scpd['PTE Status'] = scpd['Total PTEs'].apply(lambda num: 'Has No PTEs' if num =
 scpd['% Budget Allocated for Personnel'] = scpd['Total Personnel Budget'] / scpd['Total Budget']
 scpd['% Budget Allocated for Meals'] = scpd['Total Meal Budget'] / scpd['Total Budget']
 scpd['% Budget Used for AIB, SCE, & HPP Services'] = scpd['Total AIB-SCE-HPP Expenditures'] / scpd['Total Budget']
+
+
+/*
+Clean Senior Center Client Data
+*/
+
+sccd_raw = pd.read_csv('raw_csv/senior_center_client_data_fy2020.csv')
+
+# Make a copy of the raw dataframe
+sccd = sccd_raw.copy()
+
+# Merge columns from senior center provider dataset (i.e. left join sccd with scpd)
+merge_cols = ['Senior Center Name', 'Site Type', 'Borough', 'Meal Prep Type', 'Meal Prep For Other Centers', 'Total Employees', 'Client to Staff Ratio', 'PTE Status']
+sccd = sccd.merge(scpd[merge_cols], how = 'left', left_on = 'dftaid', right_on = scpd['DFTA ID'])
+
+# Rename columns to be more intuitive (based on data dictionary descriptions)
+sccd.rename(columns = {
+    'dftaid': 'DFTA ID',
+    'service_date': 'Service Date',
+    'total_daily': 'Total Daily Services',
+    'breakfast_units': 'Total Breakfasts Served',
+    'lunch_units': 'Total Lunches Served',
+    'dinner_units': 'Total Dinners Served',
+    'tot_meals': 'Total Meals Served',
+    'aib_tot': 'Total AIB Services',
+    'sce_tot': 'Total SCE Services',
+    'hpp_tot': 'Total HPP Services',
+    'tot_serv_pp': 'Total Clients Served',
+    'Senior Center Name_x': 'Senior Center Name',
+    'Site Type_x': 'Site Type', 
+    'Borough_x': 'Borough', 
+    'Meal Prep Type_x': 'Meal Prep Type',
+    'Meal Prep For Other Centers_x': 'Meal Prep For Other Centers', 
+    'Total Employees_x': 'Total Employees',
+    'Client to Staff Ratio_x': 'Client to Staff Ratio', 
+    'PTE Status_x': 'PTE Status', 
+    'Senior Center Name_y': 'Senior Center Name',
+    'Site Type_y': 'Site Type', 
+    'Borough_y': 'Borough', 
+    'Meal Prep Type_y': 'Meal Prep Type',
+    'Meal Prep For Other Centers_y': 'Meal Prep For Other Centers', 
+    'Total Employees_y': 'Total Employees',
+    'Client to Staff Ratio_y': 'Client to Staff Ratio', 
+    'PTE Status_y': 'PTE Status'
+}, inplace = True)
+
+# Drop the redundant provider_name column, since there is a merged Senior Center Name column now
+sccd.drop(columns = 'provider_name', inplace = True)
+
+# Drop the rows that have NaNs in Senior Center Name (i.e. didn't have a match in scpd dataframe)
+sccd.drop(index = sccd[sccd['Senior Center Name'].isna()].index, inplace = True)
+
+# Cast the values in 'Service Date' to datetimes
+sccd['Service Date'] = pd.to_datetime(sccd['Service Date'], format = '%m/%d/%Y')
+
+# Derive a column called 'Service Month' from the 'Service Date' column
+sccd['Service Month'] = sccd['Service Date'].dt.strftime('%B %Y')
+
+# Derive a column called 'Service Month as Num' from the 'Service Date' column
+sccd['Service Month as Num'] = sccd['Service Date'].dt.month
+
+# Derive a column called 'Fiscal Quarter' from the 'Service Month' column
+def get_fiscal_quarter(month):
+    if month in ['July 2019', 'August 2019', 'September 2019']:
+        return 'Q1'
+    elif month in ['October 2019', 'November 2019', 'December 2019']:
+        return 'Q2'
+    elif month in ['January 2020', 'February 2020', 'March 2020']:
+        return 'Q3'
+    elif month in ['April 2020', 'May 2020', 'June 2020']:
+        return 'Q4'
+    
+sccd['Fiscal Quarter'] = sccd['Service Month'].apply(get_fiscal_quarter)
+
